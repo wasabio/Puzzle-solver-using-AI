@@ -30,11 +30,7 @@ public class AStarGrid extends Grid {
 			
 			closed.add(current);
 			
-			if(heuristic.equals("h1")) {
-				current.generateSuccessorsWithH1();
-			} else if (heuristic.equals("h2")) {
-				current.generateSuccessorsWithH2();
-			}
+			current.generateSuccessors(heuristic);
 			
 			open.sort(CompareTotalCost);
 			//System.out.println(open.get(0).g());
@@ -47,11 +43,25 @@ public class AStarGrid extends Grid {
 		}
 	}
 	
-	private void generateSuccessorsWithH1() {
+	private void generateSuccessors(String heuristic) {
 		
 		Carre[] gridUp = this.moveUp();
 		if(gridUp != null) {
-			AStarGrid g = new AStarGrid(gridUp, this, h1(gridUp));
+			AStarGrid g = null;
+			
+			/* Choosing Heuristic */
+			switch(heuristic) {
+				case "h1":
+					g = new AStarGrid(gridUp, this, h1(gridUp));
+					break;
+				case "h2":
+					g = new AStarGrid(gridUp, this, h2(gridUp));
+					break;
+				case "h3":
+					g = new AStarGrid(gridUp, this, h3(gridUp));
+					break;
+			}
+			
 			if(!isInOpenOrClosed(gridUp, g.totalCost)) {
 				open.add(g);
 			}
@@ -59,7 +69,21 @@ public class AStarGrid extends Grid {
 		
 		Carre[] gridUpRight = this.moveUpRight();
 		if(gridUpRight != null) {
-			AStarGrid g = new AStarGrid(gridUpRight, this, h1(gridUpRight));
+			AStarGrid g = null;
+			
+			/* Choosing Heuristic */
+			switch(heuristic) {
+				case "h1":
+					g = new AStarGrid(gridUpRight, this, h1(gridUpRight));
+					break;
+				case "h2":
+					g = new AStarGrid(gridUpRight, this, h2(gridUpRight));
+					break;
+				case "h3":
+					g = new AStarGrid(gridUpRight, this, h3(gridUpRight));
+					break;
+			}
+			
 			if(!isInOpenOrClosed(gridUpRight, g.totalCost)) {
 				open.add(g);
 			}
@@ -67,7 +91,21 @@ public class AStarGrid extends Grid {
 		
 		Carre[] gridRight = this.moveRight();
 		if(gridRight != null) {
-			AStarGrid g = new AStarGrid(gridRight, this, h1(gridRight));
+			AStarGrid g = null;
+			
+			/* Choosing Heuristic */
+			switch(heuristic) {
+				case "h1":
+					g = new AStarGrid(gridRight, this, h1(gridRight));
+					break;
+				case "h2":
+					g = new AStarGrid(gridRight, this, h2(gridRight));
+					break;
+				case "h3":
+					g = new AStarGrid(gridRight, this, h3(gridRight));
+					break;
+			}
+			
 			if(!isInOpenOrClosed(gridRight, g.totalCost)) {
 				open.add(g);
 			}
@@ -75,7 +113,21 @@ public class AStarGrid extends Grid {
 		
 		Carre[] gridRightDown = this.moveRightDown();
 		if(gridRightDown != null) {
-			AStarGrid g = new AStarGrid(gridRightDown, this, h1(gridRightDown));
+			AStarGrid g = null;
+			
+			/* Choosing Heuristic */
+			switch(heuristic) {
+				case "h1":
+					g = new AStarGrid(gridRightDown, this, h1(gridRightDown));
+					break;
+				case "h2":
+					g = new AStarGrid(gridRightDown, this, h2(gridRightDown));
+					break;
+				case "h3":
+					g = new AStarGrid(gridRightDown, this, h3(gridRightDown));
+					break;
+			}
+			
 			if(!isInOpenOrClosed(gridRightDown, g.totalCost)) {
 				open.add(g);
 			}
@@ -83,7 +135,21 @@ public class AStarGrid extends Grid {
 		
 		Carre[] gridDown = this.moveDown();
 		if(gridDown != null) {
-			AStarGrid g = new AStarGrid(gridDown, this, h1(gridDown));
+			AStarGrid g = null;
+			
+			/* Choosing Heuristic */
+			switch(heuristic) {
+				case "h1":
+					g = new AStarGrid(gridDown, this, h1(gridDown));
+					break;
+				case "h2":
+					g = new AStarGrid(gridDown, this, h2(gridDown));
+					break;
+				case "h3":
+					g = new AStarGrid(gridDown, this, h3(gridDown));
+					break;
+			}
+			
 			if(!isInOpenOrClosed(gridDown, g.totalCost)) {
 				open.add(g);
 			}
@@ -91,7 +157,21 @@ public class AStarGrid extends Grid {
 		
 		Carre[] gridDownLeft = this.moveDownLeft();
 		if(gridDownLeft != null) {
-			AStarGrid g = new AStarGrid(gridDownLeft, this, h1(gridDownLeft));
+			AStarGrid g = null;
+			
+			/* Choosing Heuristic */
+			switch(heuristic) {
+				case "h1":
+					g = new AStarGrid(gridDownLeft, this, h1(gridDownLeft));
+					break;
+				case "h2":
+					g = new AStarGrid(gridDownLeft, this, h2(gridDownLeft));
+					break;
+				case "h3":
+					g = new AStarGrid(gridDownLeft, this, h3(gridDownLeft));
+					break;
+			}
+			
 			if(!isInOpenOrClosed(gridDownLeft, g.totalCost)) {
 				open.add(g);
 			}
@@ -99,7 +179,21 @@ public class AStarGrid extends Grid {
 		
 		Carre[] gridLeft = this.moveLeft();
 		if(gridLeft != null) {
-			AStarGrid g = new AStarGrid(gridLeft, this, h1(gridLeft));
+			AStarGrid g = null;
+			
+			/* Choosing Heuristic */
+			switch(heuristic) {
+				case "h1":
+					g = new AStarGrid(gridLeft, this, h1(gridLeft));
+					break;
+				case "h2":
+					g = new AStarGrid(gridLeft, this, h2(gridLeft));
+					break;
+				case "h3":
+					g = new AStarGrid(gridLeft, this, h3(gridLeft));
+					break;
+			}
+			
 			if(!isInOpenOrClosed(gridLeft, g.totalCost)) {
 				open.add(g);
 			}
@@ -107,74 +201,21 @@ public class AStarGrid extends Grid {
 		
 		Carre[] gridUpLeft = this.moveUpLeft();
 		if(gridUpLeft != null) {
-			AStarGrid g = new AStarGrid(gridUpLeft, this, h1(gridUpLeft));
-			if(!isInOpenOrClosed(gridUpLeft, g.totalCost)) {
-				open.add(g);
+			AStarGrid g = null;
+			
+			/* Choosing Heuristic */
+			switch(heuristic) {
+				case "h1":
+					g = new AStarGrid(gridUpLeft, this, h1(gridUpLeft));
+					break;
+				case "h2":
+					g = new AStarGrid(gridUpLeft, this, h2(gridUpLeft));
+					break;
+				case "h3":
+					g = new AStarGrid(gridUpLeft, this, h3(gridUpLeft));
+					break;
 			}
-		}
-	}
-	
-	private void generateSuccessorsWithH2() {
-		
-		Carre[] gridUp = this.moveUp();
-		if(gridUp != null) {
-			AStarGrid g = new AStarGrid(gridUp, this, h2(gridUp));
-			if(!isInOpenOrClosed(gridUp, g.totalCost)) {
-				open.add(g);
-			}
-		}
-		
-		Carre[] gridUpRight = this.moveUpRight();
-		if(gridUpRight != null) {
-			AStarGrid g = new AStarGrid(gridUpRight, this, h2(gridUpRight));
-			if(!isInOpenOrClosed(gridUpRight, g.totalCost)) {
-				open.add(g);
-			}
-		}
-		
-		Carre[] gridRight = this.moveRight();
-		if(gridRight != null) {
-			AStarGrid g = new AStarGrid(gridRight, this, h2(gridRight));
-			if(!isInOpenOrClosed(gridRight, g.totalCost)) {
-				open.add(g);
-			}
-		}
-		
-		Carre[] gridRightDown = this.moveRightDown();
-		if(gridRightDown != null) {
-			AStarGrid g = new AStarGrid(gridRightDown, this, h2(gridRightDown));
-			if(!isInOpenOrClosed(gridRightDown, g.totalCost)) {
-				open.add(g);
-			}
-		}
-		
-		Carre[] gridDown = this.moveDown();
-		if(gridDown != null) {
-			AStarGrid g = new AStarGrid(gridDown, this, h2(gridDown));
-			if(!isInOpenOrClosed(gridDown, g.totalCost)) {
-				open.add(g);
-			}
-		}
-		
-		Carre[] gridDownLeft = this.moveDownLeft();
-		if(gridDownLeft != null) {
-			AStarGrid g = new AStarGrid(gridDownLeft, this, h2(gridDownLeft));
-			if(!isInOpenOrClosed(gridDownLeft, g.totalCost)) {
-				open.add(g);
-			}
-		}
-		
-		Carre[] gridLeft = this.moveLeft();
-		if(gridLeft != null) {
-			AStarGrid g = new AStarGrid(gridLeft, this, h2(gridLeft));
-			if(!isInOpenOrClosed(gridLeft, g.totalCost)) {
-				open.add(g);
-			}
-		}
-		
-		Carre[] gridUpLeft = this.moveUpLeft();
-		if(gridUpLeft != null) {
-			AStarGrid g = new AStarGrid(gridUpLeft, this, h2(gridUpLeft));
+			
 			if(!isInOpenOrClosed(gridUpLeft, g.totalCost)) {
 				open.add(g);
 			}

@@ -29,11 +29,46 @@ public abstract class Grid {
 		return val;
 	}
 	
-	/* The BEST heuristic / Lowest value is the best */
-	/* sum of permutation inversions */
+	/* A BETTER heuristic / Lowest value is the best */
+	/* Manhattan distance :  sum up all the distances by which tiles are out of place */
 	protected int h2(Carre[] n) {
 		int val = 0;
-		if(n == null) System.out.println("ok");
+
+		/*for(int i = 0; i < (n.length-1); i++) {
+			if(n[i].getNumber() != 0 && n[i].getNumber() != goalBoard[i].getNumber()) {
+				for(int goalIndex = 0; goalIndex < n.length; goalIndex++) {
+					if(goalBoard[goalIndex].getNumber() == n[i].getNumber()) {
+						int x = (i/4);
+						int y = (i%4);
+						int xGoal = (goalIndex/4);
+						int yGoal = (goalIndex%4);
+						val = val + Math.max( Math.abs(x - xGoal), Math.abs(y - yGoal) );	//Max between difference of X and Y positions to allow diagonal moves
+						break;
+					}
+				}
+			}
+		}*/
+		/*
+		System.out.println();
+		System.out.println(n[0].getNumber() + " " + n[1].getNumber() + " " + n[2].getNumber() + " " + n[3].getNumber());
+		System.out.println(n[4].getNumber() + " " + n[5].getNumber() + " " + n[6].getNumber() + " " + n[7].getNumber());
+		System.out.println(n[8].getNumber() + " " + n[9].getNumber() + " " + n[10].getNumber() + " " + n[11].getNumber());
+		System.out.println(val);
+		try {
+			java.util.concurrent.TimeUnit.SECONDS.sleep(2);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+		return val;
+	}
+	
+	/* The BEST heuristic / Lowest value is the best */
+	/* sum of permutation inversions */
+	protected int h3(Carre[] n) {
+		int val = 0;
+
 		for(int i = 0; i < (n.length-1); i++) {
 			if(n[i].getNumber() != 0) {
 				for(int rightNumber = (i+1); rightNumber < n.length; rightNumber++) {
@@ -73,8 +108,6 @@ public abstract class Grid {
 		goalBoard[line.length-1].setNumber(0);
 		sc.close();
 	}
-	
-	
 	
 	protected boolean equals(Carre[] gridToCompare) {
 		for(int i = 0; i < this.grid.length; i++) {
@@ -149,13 +182,12 @@ public abstract class Grid {
 		}
 	}
 	
-	
 	/*		MOVES		*/
 	protected Carre[] moveUp() {
 		int emptyTileIndex = getEmptyTileIndex();
 		
 		if(isUpPossible(emptyTileIndex)) {
-			int upTileIndex = (emptyTileIndex + 4);
+			int upTileIndex = (emptyTileIndex - 4);
 			int UpNumber = this.grid[upTileIndex].getNumber();
 			Carre[] successorGrid = getCopyOf(this.grid);
 			
@@ -172,7 +204,7 @@ public abstract class Grid {
 		int emptyTileIndex = getEmptyTileIndex();
 		
 		if(isUpPossible(emptyTileIndex) && isRightPossible(emptyTileIndex)) {
-			int upRightTileIndex = (emptyTileIndex + 3);
+			int upRightTileIndex = (emptyTileIndex - 3);
 			int UpRightNumber = this.grid[upRightTileIndex].getNumber();
 			Carre[] successorGrid = getCopyOf(this.grid);
 			
@@ -189,7 +221,7 @@ public abstract class Grid {
 		int emptyTileIndex = getEmptyTileIndex();
 		
 		if(isRightPossible(emptyTileIndex)) {
-			int rightTileIndex = (emptyTileIndex - 1);
+			int rightTileIndex = (emptyTileIndex + 1);
 			int rightNumber = this.grid[rightTileIndex].getNumber();
 			Carre[] successorGrid = getCopyOf(this.grid);
 			
@@ -206,7 +238,7 @@ public abstract class Grid {
 		int emptyTileIndex = getEmptyTileIndex();
 		
 		if(isRightPossible(emptyTileIndex) && isDownPossible(emptyTileIndex)) {
-			int rightDownTileIndex = (emptyTileIndex - 5);
+			int rightDownTileIndex = (emptyTileIndex + 5);
 			int rightDownNumber = this.grid[rightDownTileIndex].getNumber();
 			Carre[] successorGrid = getCopyOf(this.grid);
 			
@@ -223,7 +255,7 @@ public abstract class Grid {
 		int emptyTileIndex = getEmptyTileIndex();
 		
 		if(isDownPossible(emptyTileIndex)) {
-			int downTileIndex = (emptyTileIndex - 4);
+			int downTileIndex = (emptyTileIndex + 4);
 			int downNumber = this.grid[downTileIndex].getNumber();
 			Carre[] successorGrid = getCopyOf(this.grid);
 			
@@ -240,7 +272,7 @@ public abstract class Grid {
 		int emptyTileIndex = getEmptyTileIndex();
 		
 		if(isDownPossible(emptyTileIndex) && isLeftPossible(emptyTileIndex)) {
-			int downLeftTileIndex = (emptyTileIndex - 3);
+			int downLeftTileIndex = (emptyTileIndex + 3);
 			int downLeftNumber = this.grid[downLeftTileIndex].getNumber();
 			Carre[] successorGrid = getCopyOf(this.grid);
 			
@@ -257,7 +289,7 @@ public abstract class Grid {
 		int emptyTileIndex = getEmptyTileIndex();
 		
 		if(isLeftPossible(emptyTileIndex)) {
-			int leftTileIndex = (emptyTileIndex + 1);
+			int leftTileIndex = (emptyTileIndex - 1);
 			int leftNumber = this.grid[leftTileIndex].getNumber();
 			Carre[] successorGrid = getCopyOf(this.grid);
 			
@@ -274,7 +306,7 @@ public abstract class Grid {
 		int emptyTileIndex = getEmptyTileIndex();
 		
 		if(isUpPossible(emptyTileIndex) && isLeftPossible(emptyTileIndex)) {
-			int upLeftTileIndex = (emptyTileIndex + 5);
+			int upLeftTileIndex = (emptyTileIndex - 5);
 			int upLeftNumber = this.grid[upLeftTileIndex].getNumber();
 			Carre[] successorGrid = getCopyOf(this.grid);
 			
@@ -285,21 +317,55 @@ public abstract class Grid {
 		}
 		
 		return null;
-	}
+	}	
 	
+	/* Check possible moves */
 	private boolean isDownPossible(int emptyTileIndex) {
-		return ((emptyTileIndex - 4) >= 0) ? true : false;
-	}
-	
-	private boolean isUpPossible(int emptyTileIndex) {
 		return ((emptyTileIndex + 4) <= 11) ? true : false;
 	}
 	
+	private boolean isUpPossible(int emptyTileIndex) {
+		return ((emptyTileIndex - 4) >= 0) ? true : false;
+	}
+	
 	private boolean isLeftPossible(int emptyTileIndex) {
-		return ((emptyTileIndex % 4) != 3) ? true : false;
+		return ((emptyTileIndex % 4) != 0) ? true : false;
 	}
 	
 	private boolean isRightPossible(int emptyTileIndex) {
-		return ((emptyTileIndex % 4) != 0) ? true : false;
+		return ((emptyTileIndex % 4) != 3) ? true : false;
+	}
+	
+	/* Print initial grid */
+	public static void print() {
+		System.out.println(" ___________ ");
+		System.out.print("|");
+		for(int i = 0; i <= 3; i++) {
+			if(initialBoard[i].getNumber() < 10) {
+				System.out.print(" ");
+			}
+			System.out.print(initialBoard[i].getNumber() + "|");
+		}
+		System.out.println();
+		System.out.println(" ___________ ");
+		System.out.print("|");
+		for(int i = 4; i <= 7; i++) {
+			if(initialBoard[i].getNumber() < 10) {
+				System.out.print(" ");
+			}
+			System.out.print(initialBoard[i].getNumber() + "|");
+		}
+		System.out.println();
+		System.out.println(" ___________ ");
+		System.out.print("|");
+		for(int i = 8; i <= 11; i++) {
+			if(initialBoard[i].getNumber() < 10) {
+				System.out.print(" ");
+			}
+			System.out.print(initialBoard[i].getNumber() + "|");
+		}
+		System.out.println();
+		System.out.println(" ___________ ");
+		System.out.println();
 	}
 }
