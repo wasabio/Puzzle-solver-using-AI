@@ -34,7 +34,7 @@ public abstract class Grid {
 	protected int h2(Carre[] n) {
 		int val = 0;
 
-		/*for(int i = 0; i < (n.length-1); i++) {
+		for(int i = 0; i < n.length; i++) {
 			if(n[i].getNumber() != 0 && n[i].getNumber() != goalBoard[i].getNumber()) {
 				for(int goalIndex = 0; goalIndex < n.length; goalIndex++) {
 					if(goalBoard[goalIndex].getNumber() == n[i].getNumber()) {
@@ -43,23 +43,12 @@ public abstract class Grid {
 						int xGoal = (goalIndex/4);
 						int yGoal = (goalIndex%4);
 						val = val + Math.max( Math.abs(x - xGoal), Math.abs(y - yGoal) );	//Max between difference of X and Y positions to allow diagonal moves
+
 						break;
 					}
 				}
 			}
-		}*/
-		/*
-		System.out.println();
-		System.out.println(n[0].getNumber() + " " + n[1].getNumber() + " " + n[2].getNumber() + " " + n[3].getNumber());
-		System.out.println(n[4].getNumber() + " " + n[5].getNumber() + " " + n[6].getNumber() + " " + n[7].getNumber());
-		System.out.println(n[8].getNumber() + " " + n[9].getNumber() + " " + n[10].getNumber() + " " + n[11].getNumber());
-		System.out.println(val);
-		try {
-			java.util.concurrent.TimeUnit.SECONDS.sleep(2);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		}
 		
 		return val;
 	}
@@ -81,14 +70,6 @@ public abstract class Grid {
 		return val;
 	}
 	
-	protected int f1(Carre[] n) {
-		return h1(n);
-	}
-	
-	protected int f2(Carre[] n) {
-		return h2(n);
-	}
-		
 	public static void generateInitialState()
 	{
 		Scanner sc = new Scanner(System.in);

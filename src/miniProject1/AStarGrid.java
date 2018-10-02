@@ -29,17 +29,8 @@ public class AStarGrid extends Grid {
 			}
 			
 			closed.add(current);
-			
 			current.generateSuccessors(heuristic);
-			
 			open.sort(CompareTotalCost);
-			//System.out.println(open.get(0).g());
-			/*System.out.println();
-			System.out.println(open.get(0).g() + "  " + open.get(0).totalCost);
-			System.out.println(open.get(0).grid[0].getNumber() + "  " + open.get(0).grid[1].getNumber() + "  " + open.get(0).grid[2].getNumber() + "  " +  open.get(0).grid[3].getNumber());
-			System.out.println(open.get(0).grid[4].getNumber() + "  " + open.get(0).grid[5].getNumber() + "  " + open.get(0).grid[6].getNumber() + "  " +  open.get(0).grid[7].getNumber());
-			System.out.println(open.get(0).grid[8].getNumber() + "  " + open.get(0).grid[9].getNumber() + "  " + open.get(0).grid[10].getNumber() + "  " +  open.get(0).grid[11].getNumber());
-			*/
 		}
 	}
 	
