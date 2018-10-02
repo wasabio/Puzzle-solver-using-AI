@@ -3,9 +3,23 @@ package miniProject1;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class AStarGrid extends Grid {
-	private static ArrayList<AStarGrid> open = new ArrayList<AStarGrid>();
+	
+    /* Comparator for sorting the list by lowest cost */
+    public static Comparator<AStarGrid> CompareTotalCost = new Comparator<AStarGrid>() {
+
+		public int compare(AStarGrid g1, AStarGrid g2) {
+		   int val1 = g1.totalCost;
+		   int val2 = g2.totalCost;
+	
+		   /*For ascending order*/
+		   return val1-val2;
+	   }
+   };
+   	
+   	private static PriorityQueue<AStarGrid> open = new PriorityQueue<AStarGrid>(1, CompareTotalCost);
 	private static ArrayList<AStarGrid> closed = new ArrayList<AStarGrid>();
 	private static AStarGrid current;
 	private int totalCost;
@@ -22,7 +36,7 @@ public class AStarGrid extends Grid {
 				return "No solution found";
 			}
 			else {
-				current = open.remove(0);
+				current = open.remove();
 				if(current.isGoalState()) {
 					return current.getSolutionPath();
 				}
@@ -30,7 +44,6 @@ public class AStarGrid extends Grid {
 			
 			closed.add(current);
 			current.generateSuccessors(heuristic);
-			open.sort(CompareTotalCost);
 		}
 	}
 	
@@ -267,18 +280,6 @@ public class AStarGrid extends Grid {
 		}
 		return cost;
 	}
-	
-    /*Comparator for sorting the list by roll no*/
-    public static Comparator<AStarGrid> CompareTotalCost = new Comparator<AStarGrid>() {
-
-		public int compare(AStarGrid g1, AStarGrid g2) {
-		   int val1 = g1.totalCost;
-		   int val2 = g2.totalCost;
-	
-		   /*For ascending order*/
-		   return val1-val2;
-	   }
-   };
    
    @Override
    public void clear() {

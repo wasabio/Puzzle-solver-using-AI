@@ -7,11 +7,10 @@ import java.util.PriorityQueue;
 
 public class BFSGrid extends Grid {
 
-	/* Comparator for sorting the list by roll no */
+	/* Comparator for sorting the list by lowest heuristic */
     public static Comparator<BFSGrid> CompareHeuristicValue = new Comparator<BFSGrid>() {
 
 		public int compare(BFSGrid g1, BFSGrid g2) {
-	
 		   int val1 = g1.heuristic;
 		   int val2 = g2.heuristic;
 	
