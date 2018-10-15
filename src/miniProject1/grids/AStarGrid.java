@@ -7,7 +7,9 @@ import java.util.PriorityQueue;
 
 import miniProject1.heuristics.HammingDistance;
 import miniProject1.heuristics.ManhattanDistance;
+import miniProject1.heuristics.ManhattanDistanceDiago;
 import miniProject1.heuristics.Permutations;
+import miniProject1.heuristics.WrongNeighbours;
 import miniProject1.utilities.Carre;
 
 public class AStarGrid extends Grid {
@@ -32,6 +34,7 @@ public class AStarGrid extends Grid {
 	/* A* algorithm */
 	@Override
 	public String execute(String heuristic) {
+		double startTime = System.nanoTime();	
 		this.grid = initialBoard;
 		this.parent = null;
 		open.add(this);
@@ -43,6 +46,9 @@ public class AStarGrid extends Grid {
 			else {
 				current = open.remove();
 				if(current.isGoalState()) {
+					double endTime = System.nanoTime();
+					double duration = ((endTime - startTime)/1000000);  //milliseconds.
+					System.out.print(duration + "ms - ");
 					return current.getSolutionPath();
 				}
 			}
@@ -101,12 +107,18 @@ public class AStarGrid extends Grid {
 		/* Choosing Heuristic */
 		switch(heuristic) {
 			case "h1":
-				grid = new AStarGrid(g, this, HammingDistance.h(g));
+				grid = new AStarGrid(g, this, WrongNeighbours.h(g));
 				break;
 			case "h2":
-				grid = new AStarGrid(g, this, ManhattanDistance.h(g));
+				grid = new AStarGrid(g, this, ManhattanDistanceDiago.h(g));
 				break;
 			case "h3":
+				grid = new AStarGrid(g, this, HammingDistance.h(g));
+				break;
+			case "h4":
+				grid = new AStarGrid(g, this, ManhattanDistance.h(g));
+				break;
+			case "h5":
 				grid = new AStarGrid(g, this, Permutations.h(g));
 				break;
 		}

@@ -7,9 +7,14 @@ import java.util.PriorityQueue;
 
 import miniProject1.heuristics.HammingDistance;
 import miniProject1.heuristics.ManhattanDistance;
+import miniProject1.heuristics.ManhattanDistanceDiago;
 import miniProject1.heuristics.Permutations;
+import miniProject1.heuristics.WrongNeighbours;
 import miniProject1.utilities.Carre;
 
+/*
+ * Best-first search grid
+ */
 public class BFSGrid extends Grid {
 
 	/* Comparator for sorting the list by lowest heuristic */
@@ -32,6 +37,7 @@ public class BFSGrid extends Grid {
 	/* BFS algorithm */
 	@Override
 	public String execute(String heuristic) {
+		double startTime = System.nanoTime();		
 		this.grid = initialBoard;
 		this.parent = null;
 		open.add(this);
@@ -43,6 +49,9 @@ public class BFSGrid extends Grid {
 			else {
 				current = open.remove();
 				if(current.isGoalState()) {
+					double endTime = System.nanoTime();
+					double duration = ((endTime - startTime)/1000000);  //milliseconds.
+					System.out.print(duration + "ms - ");
 					return current.getSolutionPath();
 				}
 			}
@@ -52,6 +61,9 @@ public class BFSGrid extends Grid {
 		}
 	}
 	
+	/*
+	 * Generating successors
+	 */
 	private void generateSuccessors(String heuristic) {
 		Carre[] gridUp = this.moveUp();
 		if(gridUp != null && (!isInOpenOrClosed(gridUp))) {
@@ -94,16 +106,25 @@ public class BFSGrid extends Grid {
 		}
 	}
 	
+	/*
+	 * Evaluating a new grid with the heuristic and adding it to open.
+	 */
 	private void addToOpen(Carre[] g, String heuristic) {
 		/* Choosing Heuristic */
 		switch(heuristic) {
 			case "h1":
-				open.add(new BFSGrid(g, this, HammingDistance.h(g)));
+				open.add(new BFSGrid(g, this, WrongNeighbours.h(g)));
 				break;
 			case "h2":
-				open.add(new BFSGrid(g, this, ManhattanDistance.h(g)));
+				open.add(new BFSGrid(g, this, ManhattanDistanceDiago.h(g)));
 				break;
 			case "h3":
+				open.add(new BFSGrid(g, this, HammingDistance.h(g)));
+				break;
+			case "h4":
+				open.add(new BFSGrid(g, this, ManhattanDistance.h(g)));
+				break;
+			case "h5":
 				open.add(new BFSGrid(g, this, Permutations.h(g)));
 				break;
 		}

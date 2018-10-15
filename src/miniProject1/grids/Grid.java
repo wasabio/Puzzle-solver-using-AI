@@ -42,6 +42,9 @@ public abstract class Grid {
 		sc.close();
 	}
 	
+	/*
+	 * Check if 2 grids are equals
+	 */
 	protected boolean equals(Carre[] gridToCompare) {
 		for(int i = 0; i < this.grid.length; i++) {
 			if(this.grid[i].getNumber() != gridToCompare[i].getNumber()) {
@@ -52,6 +55,9 @@ public abstract class Grid {
 		return true;
 	}
 	
+	/*
+	 * Check if a grid is a goal state
+	 */
 	protected boolean isGoalState() {
 		for(int i = 0; i < this.grid.length; i++) {
 			if(this.grid[i].getNumber() != goalBoard[i].getNumber()) {
@@ -62,6 +68,9 @@ public abstract class Grid {
 		return true;
 	}
 	
+	/*
+	 * Get position of the empty tile (0)
+	 */
 	private int getEmptyTileIndex() {
 		for(int i = 0; i < this.grid.length; i++) {
 			if(this.grid[i].getNumber() == 0) {
@@ -71,6 +80,9 @@ public abstract class Grid {
 		return -1;
 	}
 	
+	/*
+	 * Duplicate a grid
+	 */
 	protected Carre[] getCopyOf(Carre[] origin) {
 		Carre[] copy = new Carre[(origin.length)];
 		
@@ -81,16 +93,21 @@ public abstract class Grid {
 		return copy;
 	}
 	
+	/*
+	 * Find the solution path by going back through all used nodes.
+	 */
 	protected String getSolutionPath() {
+		int moves = 0;
 		String solutionPath = "";
 		Grid grid = this;
 		
 		while(grid.parent != null)
 		{
+				moves++;
 				solutionPath = System.lineSeparator() + grid.getMoveLetter() + " " + grid.toString() + solutionPath;
 				grid = grid.parent;
 		}
-		
+		System.out.println(moves + " moves");
 		solutionPath = "0 " + grid.toString() + solutionPath;
 		
 		return solutionPath;
@@ -253,19 +270,19 @@ public abstract class Grid {
 	}	
 	
 	/* Check possible moves */
-	private boolean isDownPossible(int emptyTileIndex) {
+	public static boolean isDownPossible(int emptyTileIndex) {
 		return ((emptyTileIndex + 4) <= 11) ? true : false;
 	}
 	
-	private boolean isUpPossible(int emptyTileIndex) {
+	public static boolean isUpPossible(int emptyTileIndex) {
 		return ((emptyTileIndex - 4) >= 0) ? true : false;
 	}
 	
-	private boolean isLeftPossible(int emptyTileIndex) {
+	public static boolean isLeftPossible(int emptyTileIndex) {
 		return ((emptyTileIndex % 4) != 0) ? true : false;
 	}
 	
-	private boolean isRightPossible(int emptyTileIndex) {
+	public static boolean isRightPossible(int emptyTileIndex) {
 		return ((emptyTileIndex % 4) != 3) ? true : false;
 	}
 	
